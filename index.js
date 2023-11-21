@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 
-const persons = [
+app.use(express.json());
+
+let persons = [
   {
     id: 1,
     name: "Arto Hellas",
@@ -36,15 +38,48 @@ app.get("/api/persons", (request, response) => {
 
 app.get("/info", (request, response) => {
   response.send(
-    `<p>Phonebook has info for ${Object.keys(persons).length}.</p>
+    `<p>Phonebook has info for ${Object.keys(persons).length} people.</p>
     <br/>
     ${Date()}
     `
   );
 });
 
-const PORT = 3001;
+app.get("/api/persons/:id", (request, response) => {
+  const id = Number(request.params.id);
+  const person = persons.find((person) => person.id === id);
 
+  if (person) response.send(person);
+  else response.status(404).end();
+});
+
+app.delete("/api/persons/:id", (request, response) => {
+  const id = Number(request.params.id);
+  response.send(persons.filter((person) => person.id !== id));
+});
+
+app.post("/api/persons/", (request, response) => {
+  const id = Math.floor(Math.random() * 100 + 5);
+  const body = request.body;
+  const person = {
+    id: id,
+    name: body.name,
+    number: body.number,
+  };
+
+  if (persons.find((item) => item.name === person.name)) {
+    response.status(404).send("Error: Name must be unique");
+  } else if (!person.name) {
+    response.status(404).send("Error: Name missing");
+  } else if (!person.number) {
+    response.status(404).send("Error: Number missing");
+  }
+  console.log(person);
+  persons = persons.concat(person);
+  response.json(person);
+});
+
+const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server hosted on ${PORT}`);
 });
