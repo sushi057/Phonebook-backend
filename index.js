@@ -1,7 +1,25 @@
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
+const cors = require("cors");
 
+//Configure morgan
+app.use(cors());
 app.use(express.json());
+app.use(morgan("combined"));
+
+morgan.token("output", (request, response) => {
+  return JSON.stringify(request.body);
+});
+
+app.use(
+  morgan(
+    ":method :url :status :res[content-length] - :response-time ms :output",
+    {
+      skip: (request, response) => request.method !== "POST",
+    }
+  )
+);
 
 let persons = [
   {
@@ -79,7 +97,7 @@ app.post("/api/persons/", (request, response) => {
   response.json(person);
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server hosted on ${PORT}`);
+  console.log(`Server hosted on http://localhost:${PORT}`);
 });
