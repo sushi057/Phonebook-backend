@@ -14,14 +14,14 @@ mongoose.set("strictQuery", false);
 mongoose.connect(url);
 
 const personSchema = mongoose.Schema({
-  person: String,
+  name: String,
   number: String,
 });
 
 const Person = mongoose.model("Person", personSchema);
 
 const person = new Person({
-  person: personName,
+  name: personName,
   number: personNumber,
 });
 
@@ -34,7 +34,7 @@ if (process.argv.length == 5) {
 
 Person.find({}).then((result) => {
   result.forEach((element) => {
-    console.log(element.person, element.number);
+    console.log(element.name, element.number);
   });
   mongoose.connection.close();
 });
