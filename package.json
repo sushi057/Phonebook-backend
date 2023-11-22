@@ -8,7 +8,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build:ui": "rmdir /s /q dist && cd ..\\..\\part2\\phonebook && npm run build && xcopy /s /e dist ..\\..\\part3\\persons-backend\\dist",
-    "deploy:full": "npm run build:ui && git add . && git commit -m buildui && git push"
+    "deploy:full": "npm run build:ui && git add . && git commit -m buildui && git push",
+    "lint": "eslint"
   },
   "author": "sushi",
   "license": "MIT",
@@ -20,6 +21,9 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.54.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.0",
     "nodemon": "^3.0.1"
   }
 }

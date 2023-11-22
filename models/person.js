@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle */
 const mongoose = require("mongoose");
 
 mongoose.set("strictQuery", false);
@@ -8,7 +10,7 @@ console.log("connecting to", url);
 
 mongoose
   .connect(url)
-  .then((result) => {
+  .then(() => {
     console.log("Connected to MongoDB");
   })
   .catch((error) => {
@@ -23,7 +25,15 @@ const personSchema = mongoose.Schema({
   },
   number: {
     type: String,
-    minLength: 6,
+    minLength: 8,
+    validate: {
+      validator(value) {
+        const regex = /^\d{2,3}-\d+$/;
+        return regex.test(value);
+      },
+      message: (props) => `${props.value} is not a valid number`,
+    },
+    required: [true, "user phone number is required"],
   },
 });
 
