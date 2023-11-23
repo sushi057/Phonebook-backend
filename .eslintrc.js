@@ -5,29 +5,29 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: 'eslint:recommended',
+  extends: "eslint:recommended",
   overrides: [
     {
       env: {
         node: true,
       },
-      files: ['.eslintrc.{js,cjs}'],
+      files: [".eslintrc.{js,cjs}"],
       parserOptions: {
-        sourceType: 'script',
+        sourceType: "script",
       },
     },
   ],
   parserOptions: {
-    ecmaVersion: 'latest',
+    ecmaVersion: "latest",
   },
-  plugins: ['react', 'prettier'],
+  // plugins: ["prettier"],
   rules: {
-    indent: ['error', 2],
-    eqeqeq: 'error',
-    'no-trailing-spaces': 'error',
-    'object-curly-spacing': ['error', 'always'],
-    'arrow-spacing': ['error', { before: true, after: true }],
-    'no-console': 0,
-    'linebreak-style': 'off',
+    indent: ["error", 2],
+    eqeqeq: "error",
+    "no-trailing-spaces": "error",
+    "object-curly-spacing": ["error", "always"],
+    "arrow-spacing": ["error", { before: true, after: true }],
+    "no-console": 0,
+    "linebreak-style": "off",
   },
 };
